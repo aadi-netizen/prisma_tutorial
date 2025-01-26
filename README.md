@@ -66,6 +66,7 @@ _Command :_ `npx prisma init --datasource-provider postgresql`
       - HOST: The name of your host name (for the local environment, it is localhost)
       - PORT: The port where your database server is running (typically 5432 for PostgreSQL)
       - DATABASE: The name of the database
+        - Database "test" must exist in the database server
       - SCHEMA: The name of the schema inside the database
 - `schema.prisma` file
   - `generator client {...}` : Generate `Prisma Client` for you
@@ -78,8 +79,45 @@ _Command :_ `npx prisma init --datasource-provider postgresql`
     - `pg` npm pakage is installed, which provides us a Client to interact from the backend
     - ORM like `prisma` is used to simplify the processes.
 
-> !NOTE
+> [!NOTE]
 > pgAdmin requires user password for its access. If password is lost, then it either could be recovered by altering `pg_hba.conf` file or New password could be set by reinstalling the postgres installer. The Uninstallation should be complete ( _data directory_ ). You would be need to close the active task used by postgres and postgresql services must be stopped from the `services.msc` file.
 
-> [!IMPORTANT]  
-> Crucial information necessary for users to succeed.
+> [!TIP]
+> CMD commad to check and manage active connection to your pc
+
+```sh
+
+netstat                              // Can be used to trobleshoot network issues
+tasklist                             // Displays a list of running processes
+taskkill /IM <taskname> /F           // to kill a task by image name
+taskkill /PID <pid> /F               // to kill a task by PID
+tasklist | findstr postgres          // Displays running process by the name postgres
+
+```
+
+> [!TIP]
+> Node.js Options and Flags
+> **Options**
+
+- Def: Options are command-line arguments that typically take a value or argument along with them.
+- Purpose: Used to configure the program by passing specific values for parameters.
+- Syntax: Usually specified using a -- prefix and followed by a value (sometimes separated by a space or =).
+- Example: node app.js --port 3000 --env production
+- Options require or expect a value (although default values can be assigned if none are provided).
+
+**Flags**
+
+- Definition: Flags are boolean switches that toggle a feature on or off. They do not take a value.
+- Purpose: Used to enable or disable features or modes in the program.
+- Syntax: Usually specified using a -- prefix and without an associated value.
+- Example: node app.js --verbose --debug
+- Flags are either present or absent.
+- If present, they are interpreted as true; if absent, they are interpreted as false.
+
+**short options or flags**
+
+- Short Options (Single Character) followed by single hyphen " - "
+- A single hyphen is followed by a single letter to represent an option.
+- These options often have long-form equivalents that start with --.
+- Example: "-p" represents "--port"
+- _Grouping Short Flags_ : `ls -lh` represents `ls -l -h`
