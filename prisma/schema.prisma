@@ -13,7 +13,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User model
 model User {
-  id   Int     @id @default(autoincrement())
-  name String?
+  id                String           @id @default(uuid())
+  name              String
+  age               Int
+  role              Role             @default(USER)
+  email             String
+  posts             Post[]
+  userPreferencesId String?          @unique
+  userPreferences   UserPreferences? @relation(fields: [userPreferencesId], references: [preferenceId], onDelete: Cascade)
+
+  @@unique([name, email])
+}
+
+model UserPreferences {
+  preferenceId String @id @default(uuid())
+  theme        String
+  user         User?
+}
+
+// Post model
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  published Boolean
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// enumerated type
+enum Role {
+  USER
+  ADMIN
 }

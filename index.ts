@@ -1,14 +1,11 @@
 import { PrismaClient } from '@prisma/client'
+import { log } from 'console'
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({ log: ['query'] }) // log all queries
 
 async function main() {
-  const user = await prisma.user.create({
-    data: {
-      name: 'Arya Chaudhary ',
-    },
-  })
-  console.log(user)
+  const users = await prisma.user.deleteMany()
+  log(users)
 }
 
 main()
